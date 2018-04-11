@@ -1,0 +1,53 @@
+<html>
+<head>
+	
+	<body>
+	<div class = 'pane'>
+		<div class = 'header'>
+		<h1>{{ category.name }}</h1>
+	</div>
+
+	<a href = '#'>Create New Item</a>
+
+
+</div>
+
+
+		{% for i in items %}
+    <div class = 'name'>
+		<span class = 'name'><p>{{i.name}}</p></span>
+	</div>
+
+	
+	
+	<div class = 'description'>
+		<p>{{i.description}}</p>
+	</div>
+
+	
+	
+	<div class = "editdeletepane">
+
+	<a href='#'>Edit</a>
+	
+	<a href = '#'>Delete</a>
+	
+	</div>
+
+
+
+
+		{% endfor %}
+
+
+		
+		
+
+</div>
+</div>
+	</body>
+
+
+
+
+</html>

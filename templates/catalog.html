@@ -1,0 +1,41 @@
+
+<html>
+
+<body>
+
+<h1>Item Catalog</h1>
+
+<a href = '#'>Create New Item</a>
+
+<div class = 'flash'>
+		      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+{% for c in categories %}
+
+<div>
+
+<h2>{{c.name}}</h2>
+
+<a href= "#">Edit Item Category</a>
+</br>
+<a href="#">Delete Item Category</a>
+
+
+</div>
+
+
+{% endfor %}
+</body>
+
+</html>
