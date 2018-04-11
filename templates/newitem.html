@@ -5,7 +5,7 @@
 <h1>New Category Item</h1>
 
 <div class = 'pane'>
-<form action="{{ url_for('newItem', category_id=category_id)}}" method = 'post'>
+<form action="{{ url_for('newItem')}}" method = 'post'>
 
 <dl>
       <dt>Name:</dt>
@@ -17,7 +17,6 @@
                         {% for c in categories %}
                               <dd><option value='{{c.id}}'>{{c.name}}</option></dd>
                         {% endfor %}
-
                   </select>
 
 </dl>
@@ -25,7 +24,11 @@
 
 <input type='submit' value='Create'>
 
+<a href = '{{url_for('showCatalog')}}'> Cancel </a>
+
 </form>
+
+
 </div>
 
 </body>

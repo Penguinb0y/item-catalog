@@ -27,6 +27,8 @@ items = session.query(CategoryItem).all()
 print "All items in all categories:\n"
 for item in items:
 	print item.name
+	print item.id
+	print item.category_id
 print "\n"
 
 category = session.query(Category).filter_by(id=1).one()

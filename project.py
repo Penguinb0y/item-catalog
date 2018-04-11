@@ -68,17 +68,6 @@ def deleteRestaurant(category_id):
 
 
 # EVERYTHING MenuItem RELATED BELOW
-
-@app.route('/catalog/<string:category_name>')
-@app.route('/catalog/<int:category_id>/')
-def showCategory(category_id):
-    category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(CategoryItem).filter_by(category_id=category_id)
-    #return "This page is the category for category %s" % category_id
-    return render_template(
-        'category.html', category=category, items=items, category_id=category_id)
-
-
 @app.route('/catalog/new', methods=['GET', 'POST'])
 def newItem():
     categories = session.query(Category).all()
@@ -93,25 +82,32 @@ def newItem():
         return render_template('newitem.html', categories=categories)
 
 
-@app.route('/category/<int:category_id>/edit',
+@app.route('/catalog/<string:category_name>')
+@app.route('/catalog/<int:category_id>/')
+def showCategory(category_id):
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(CategoryItem).filter_by(category_id=category_id)
+    #return "This page is the category for category %s" % category_id
+    return render_template(
+        'category.html', category=category, items=items, category_id=category_id)
+
+
+@app.route('/catalog/<int:category_id>/<int:item_id>/edit/',
            methods=['GET', 'POST'])
-def editItem(category_id, menu_id):
-    editedItem = session.query(CategoryItem).filter_by(id=category_id).one()
+def editItem(category_id, item_id):
+    editedItem = session.query(CategoryItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
         if request.form['description']:
             editedItem.description = request.form['description']
-        if request.form['category']:
-            editedItem.id = request.form['category']
         session.add(editedItem)
         session.commit()
         flash("Item has been edited")
         return redirect(url_for('showCategory', category_id=category_id))
     else:
-
         return render_template(
-            'edititem.html', category_id=category_id, menu_id=menu_id, item=editedItem)
+            'edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
 
 
 @app.route('/category/<int:category_id>/delete',
