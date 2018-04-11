@@ -81,15 +81,16 @@ def showCategory(category_id):
 
 @app.route('/catalog/new', methods=['GET', 'POST'])
 def newItem():
+    categories = session.query(Category).all()
     if request.method == 'POST':
         newItem = CategoryItem(name=request.form['name'], description=request.form[
                            'description'], category_id=request.form['category'])
         session.add(newItem)
         session.commit()
         flash("new item created!")
-        return redirect(url_for('showCategory', category_id=category_id))
+        return redirect(url_for('showCatalog'))
     else:
-        return render_template('newitem.html')
+        return render_template('newitem.html', categories=categories)
 
 
 @app.route('/category/<int:category_id>/edit',
