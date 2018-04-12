@@ -13,7 +13,6 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-################# NEW FUNCTIONS FOR Categories #######################
 
 @app.route('/')
 @app.route('/catalog/')
@@ -24,50 +23,7 @@ def showCatalog():
         'catalog.html', categories=categories)
 
 
-"""
-@app.route('/restaurant/new', methods=['GET', 'POST'])
-def newRestaurant():
 
-    if request.method == 'POST':
-        newRestaurant = Restaurant(name=request.form['name'])
-        session.add(newRestaurant)
-        session.commit()
-        flash("new restaurant created!")
-        return redirect(url_for('showRestaurants'))
-    else:
-    #return "This page will be for making a new restaurant"
-        return render_template(
-            'newRestaurant.html', Restaurant=Restaurant)
-
-
-@app.route('/restaurant/<int:category_id>/edit', methods=['GET', 'POST'])
-def editRestaurant(category_id):
-    #return "This page will be for editing %s" % category_id
-    return render_template(
-        'editRestaurant.html', restaurant=restaurant, category_id=category_id)
-
-
-@app.route('/restaurant/<int:category_id>/delete', methods=['GET', 'POST'])
-def deleteRestaurant(category_id):
-    
-    itemToDelete = session.query(Restaurant).filter_by(id=category_id).one()
-    if request.method == 'POST':
-        session.delete(itemToDelete)
-        session.commit()
-        flash("Menu Item has been deleted")
-        return redirect(url_for('showRestaurants'))
-    else:
-        return render_template('deleteRestaurant.html', Restaurant=itemToDelete, category_id=category_id)
-    #return "This page will be for deleting %s" % category_id
-    
-    #return render_template(
-    #   'deleteRestaurant.html', restaurant=restaurant, category_id=category_id)
-
-
-"""
-
-
-# EVERYTHING MenuItem RELATED BELOW
 @app.route('/catalog/new', methods=['GET', 'POST'])
 def newItem():
     categories = session.query(Category).all()
@@ -110,17 +66,17 @@ def editItem(category_id, item_id):
             'edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
 
 
-@app.route('/category/<int:category_id>/delete',
+@app.route('/catalog/<int:category_id>/<int:item_id>/delete/',
            methods=['GET', 'POST'])
-def deleteItem(category_id, menu_id):
-    itemToDelete = session.query(MenuItem).filter_by(id=menu_id).one()
+def deleteItem(category_id, item_id):
+    itemToDelete = session.query(CategoryItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
-        flash("Menu Item has been deleted")
-        return redirect(url_for('showMenu', category_id=category_id))
+        flash("Item has been deleted")
+        return redirect(url_for('showCategory', category_id=category_id))
     else:
-        return render_template('deletemenuitem.html', item=itemToDelete)
+        return render_template('deleteitem.html', category_id=category_id, item=itemToDelete)
 
 
 
