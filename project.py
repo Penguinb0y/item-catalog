@@ -14,6 +14,28 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+#JSON APIs to view Catalog Information
+@app.route('/catalog/JSON')
+def catalogJSON():
+    categories = session.query(Category).all()
+    return jsonify(categories= [c.serialize for c in categories])
+
+
+@app.route('/catalog/<int:category_id>/JSON')
+def categoryJSON(category_id):
+    category = session.query(Category).filter_by(id = category_id).one()
+    items = session.query(CategoryItem).filter_by(category_id = category_id).all()
+    return jsonify(Category_Items=[i.serialize for i in items])
+
+
+@app.route('/catalog/<int:category_id>/<int:item_id>/JSON')
+def categoryItemJSON(category_id, item_id):
+    Category_Item = session.query(CategoryItem).filter_by(id = item_id).one()
+    return jsonify(Category_Item = Category_Item.serialize)
+
+
+
+#Show the whole catalog
 @app.route('/')
 @app.route('/catalog/')
 def showCatalog():
@@ -23,7 +45,7 @@ def showCatalog():
         'catalog.html', categories=categories)
 
 
-
+#Create a new item in the database
 @app.route('/catalog/new', methods=['GET', 'POST'])
 def newItem():
     categories = session.query(Category).all()
@@ -38,16 +60,18 @@ def newItem():
         return render_template('newitem.html', categories=categories)
 
 
+#Show specified category
 @app.route('/catalog/<string:category_name>')
 @app.route('/catalog/<int:category_id>/')
 def showCategory(category_id):
     category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(CategoryItem).filter_by(category_id=category_id)
+    items = session.query(CategoryItem).filter_by(category_id=category_id).all()
     #return "This page is the category for category %s" % category_id
     return render_template(
         'category.html', category=category, items=items, category_id=category_id)
 
 
+#Edit an existing item
 @app.route('/catalog/<int:category_id>/<int:item_id>/edit/',
            methods=['GET', 'POST'])
 def editItem(category_id, item_id):
@@ -66,6 +90,7 @@ def editItem(category_id, item_id):
             'edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
 
 
+#Delete an existing item
 @app.route('/catalog/<int:category_id>/<int:item_id>/delete/',
            methods=['GET', 'POST'])
 def deleteItem(category_id, item_id):
