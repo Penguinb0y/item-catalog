@@ -8,6 +8,10 @@
 	</div>
 
 	<a href = '{{url_for('newItem') }}'>Create New Item</a>
+	<div>
+		<a href="{{url_for('showCatalog')}} ">Go Back</a>
+	</div>
+
 
 <div class = 'flash'>
 		      {% with messages = get_flashed_messages() %}
@@ -52,10 +56,6 @@
 
 
 		{% endfor %}
-
-
-		
-		
 
 </div>
 </div>
