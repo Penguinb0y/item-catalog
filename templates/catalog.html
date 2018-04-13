@@ -1,43 +1,57 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 
-<html>
 
-<body>
-
-<h1>Item Catalog</h1>
-
-<a href = '{{url_for('newItem') }}'>Create New Item</a>
+<div class="row top-menu">
+	<div class="col-md-10"></div>
+	<div class="col-md-2 text-right">
+	</div>
+</div>
+<div class="row divider blue">
+	<div class="col-md-12"></div>
+</div>
+<div class="row banner main">
+	<div class="col-md-1"></div>
+	<div class="col-md-11 padding-none">
+		<h1>Item Catalog</h1>
+	</div>
+</div>
 
 <div class = 'flash'>
-		      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-          
-        <ul>
-        {% for message in messages %}
-            <li> <strong> {{ message }} </strong> </li>
-        {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+
+	<ul>
+		{% for message in messages %}
+		<li> <strong> {{ message }} </strong> </li>
+		{% endfor %}
+	</ul>
+	{% endif %}
+	{% endwith %}
 
 </div>
 
-{% for c in categories %}
-
-<div>
-
-<a href='{{url_for('showCategory', category_id = c.id )}}' >
-<h2>{{c.name}}</h2>
-</a>
-
-<a href= "#">Edit Item Category</a>
-</br>
-<a href="#">Delete Item Category</a>
-
-
-</div>
-
-
-{% endfor %}
-</body>
-
-</html>
+	<div class="row padding-top padding-bottom">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 padding-none">
+			<a href="{{url_for('newItem')}}">
+				<button class="btn btn-default" id="new-item">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
+				</button>
+			</a>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	{% for c in categories %}
+		<a href = "{{url_for('showCategory', category_id = c.id )}}">
+			<div class="row">
+				<div class="col-md-1"></div>
+					<div class="col-md-10 category-list">
+						<h3>{{c.name}}</h3>
+					</div>
+				<div class="col-md-1"></div>
+			</div>
+		</a>
+	{% endfor %}
+{% endblock %}

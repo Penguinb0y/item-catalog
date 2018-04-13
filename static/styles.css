@@ -1,0 +1,48 @@
+* {
+	font-family: 'Ubuntu Bold', Roboto, Arial, sans-serif;
+	font-weight: 700;
+}
+
+h1 {
+	font-family: 'Ubuntu Light', Roboto, Arial, sans-serif;
+	font-size: 50px;
+	color: #3a4450;
+	line-height: 60px;
+	font-weight: 300;
+}
+
+h2 {
+	font-size: 24px;
+	color: #4297c9;
+}
+
+h3 {
+	font-size: 18px;
+	color: #383838;
+	line-height: 23px;
+}
+
+p {
+ 	font-family: "Ubuntu", Roboto, Arial, sans-serif;
+ 	font-size: 16px;
+ 	color: #73747b;
+ 	line-height: 24px;
+ 	font-weight: 400;
+ }
+
+strong {
+ 	font-size: 16px;
+ 	color: #595553;
+ 	line-height: 24px;
+ }
+
+ a {
+ 	font-size: 14px;
+ 	color: #189abc;
+ 	line-height: 17px;
+ }
+
+ .item {
+ 	margin-top: 20px;
+ 	margin-bottom: 10px;
+ }

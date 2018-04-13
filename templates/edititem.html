@@ -1,5 +1,6 @@
-<html>
-	<body>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 
 <h1> Edit Item </h1>
 
@@ -15,7 +16,7 @@
 
 <input type='submit' value='Edit'>
 
-<a href = '{{url_for('showCategory', category_id=category_id,)}} '> Cancel </a>
+<button><a href = '{{url_for('showCategory', category_id=category_id,)}} '> Cancel </a>
+</button>
 </form>
-</body>
-</html>
+{% endblock %}
