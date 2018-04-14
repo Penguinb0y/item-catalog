@@ -50,10 +50,10 @@
 
 	<div class = "editdeletepane">
 		<button>
-			<a href='{{url_for('editItem', category_id = category_id, item_id = i.id) }}'>Edit</a>
+			<a href='{{url_for('editItem', category_name = category_name, item_id = i.id) }}'>Edit</a>
 		</button>
 		<button>
-			<a href = '{{url_for('deleteItem', category_id = category_id, item_id = i.id) }}'>Delete</a>
+			<a href = '{{url_for('deleteItem', category_name = category_name, item_id = i.id) }}'>Delete</a>
 		</button>
 	</div>
 

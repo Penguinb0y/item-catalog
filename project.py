@@ -14,6 +14,13 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+#returns Category.id derrived from its name
+def getCategoryid(category_name):
+    c = session.query(Category).filter_by(name=category_name).one()
+    results = c.id
+    return results
+
+
 #JSON APIs to view Catalog Information
 @app.route('/catalog/JSON')
 def catalogJSON():
@@ -21,18 +28,19 @@ def catalogJSON():
     return jsonify(categories= [c.serialize for c in categories])
 
 
-@app.route('/catalog/<int:category_id>/JSON')
-def categoryJSON(category_id):
+@app.route('/catalog/<string:category_name>/JSON')
+def categoryJSON(category_name):
+    category_id = getCategoryid(category_name)
     category = session.query(Category).filter_by(id = category_id).one()
     items = session.query(CategoryItem).filter_by(category_id = category_id).all()
     return jsonify(Category_Items=[i.serialize for i in items])
 
 
-@app.route('/catalog/<int:category_id>/<int:item_id>/JSON')
-def categoryItemJSON(category_id, item_id):
+@app.route('/catalog/<string:category_name>/<int:item_id>/JSON')
+def categoryItemJSON(category_name, item_id):
+    category_id = getCategoryid(category_name)
     Category_Item = session.query(CategoryItem).filter_by(id = item_id).one()
     return jsonify(Category_Item = Category_Item.serialize)
-
 
 
 #Show the whole catalog
@@ -61,47 +69,50 @@ def newItem():
 
 
 #Show specified category
-@app.route('/catalog/<string:category_name>')
-@app.route('/catalog/<int:category_id>/')
-def showCategory(category_id):
+@app.route('/catalog/<string:category_name>/')
+def showCategory(category_name):
+    category_id = getCategoryid(category_name)
     category = session.query(Category).filter_by(id=category_id).one()
     items = session.query(CategoryItem).filter_by(category_id=category_id).all()
     #return "This page is the category for category %s" % category_id
     return render_template(
-        'category.html', category=category, items=items, category_id=category_id)
+        'category.html', category=category, items=items, category_name=category_name)
 
 
 #Edit an existing item
-@app.route('/catalog/<int:category_id>/<int:item_id>/edit/',
+@app.route('/catalog/<string:category_name>/<int:item_id>/edit/',
            methods=['GET', 'POST'])
-def editItem(category_id, item_id):
+def editItem(category_name, item_id):
+    category_id = getCategoryid(category_name)
     editedItem = session.query(CategoryItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editedItem.name = request.form['name']
         if request.form['description']:
             editedItem.description = request.form['description']
+        if request.form['category']:
+            editedItem.category_id = request.form['category']
         session.add(editedItem)
         session.commit()
         flash("Item has been edited")
-        return redirect(url_for('showCategory', category_id=category_id))
+        return redirect(url_for('showCategory', category_name=category_name))
     else:
         return render_template(
-            'edititem.html', category_id=category_id, item_id=item_id, item=editedItem)
+            'edititem.html', category_name=category_name, item_id=item_id, item=editedItem)
 
 
 #Delete an existing item
-@app.route('/catalog/<int:category_id>/<int:item_id>/delete/',
-           methods=['GET', 'POST'])
-def deleteItem(category_id, item_id):
+@app.route('/catalog/<string:category_name>/<int:item_id>/delete/',methods=['GET', 'POST'])
+def deleteItem(category_name, item_id):
+    category_id = getCategoryid(category_name)
     itemToDelete = session.query(CategoryItem).filter_by(id=item_id).one()
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
         flash("Item has been deleted")
-        return redirect(url_for('showCategory', category_id=category_id))
+        return redirect(url_for('showCategory', category_name=category_name))
     else:
-        return render_template('deleteitem.html', category_id=category_id, item=itemToDelete)
+        return render_template('deleteitem.html', category_id=category_id, category_name=category_name, item=itemToDelete)
 
 
 

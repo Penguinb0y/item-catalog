@@ -31,8 +31,15 @@ for item in items:
 	print item.category_id
 print "\n"
 
-category = session.query(Category).filter_by(id=1).one()
+category = session.query(Category.name).filter_by(id=1).one()
 
-print "Category Id: 1\n"
+print "Category Name:\n"
 print category.name
 print "\n"
+
+categoryid = session.query(Category).filter_by(name='Basketball').one()
+
+print "Category Id:\n"
+print categoryid.id
+print "\n"
+
