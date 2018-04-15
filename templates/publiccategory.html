@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+
+<div class = 'pane'>
+	<div class = 'header'>
+		<h1>{{ category.name }}</h1>
+	</div>
+
+	<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+		{% if messages %}
+
+		<ul>
+			{% for message in messages %}
+			<li> <strong> {{ message }} </strong> </li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+		{% endwith %}
+
+	</div>
+
+
+</div>
+
+{% for i in items %}
+
+<div class="item">
+	<div class = 'name'>
+		<span class = 'name'><h3>{{i.name}}</h3></span>
+	</div>
+
+	<div class = 'description'>
+		<p>{{i.description}}</p>
+	</div>
+	</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+</div>
+{% endblock %}
