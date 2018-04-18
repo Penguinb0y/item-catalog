@@ -264,13 +264,6 @@ def gdisconnect():
         return response
 
 
-#returns Category.id derrived from its name
-def getCategoryid(category_name):
-    c = session.query(Category).filter_by(name=category_name).one()
-    results = c.id
-    return results
-
-
 #JSON APIs to view Catalog Information
 @app.route('/catalog/JSON')
 def catalogJSON():
@@ -293,15 +286,35 @@ def categoryItemJSON(category_name, item_id):
     return jsonify(Category_Item = Category_Item.serialize)
 
 
+@app.route('/catalog/user/JSON')
+def userItemsJSON():
+    user_id = getUserID(login_session['email'])
+    user_items = session.query(CategoryItem).filter_by(user_id=user_id).all()
+    return jsonify(user_items=[i.serialize for i in user_items])
+
+
+#Helper Function: returns Category.id derrived from its name
+def getCategoryid(category_name):
+    c = session.query(Category).filter_by(name=category_name).one()
+    results = c.id
+    return results
+
+
 #Show the whole catalog
 @app.route('/')
 @app.route('/catalog/')
 def showCatalog():
     categories = session.query(Category).all()
-    if 'username' not in login_session:
-        return render_template('publiccatalog.html', categories=categories)
-    else:
-        return render_template('catalog.html', categories=categories)
+    return render_template('catalog.html', categories=categories)
+
+
+#Show specified category
+@app.route('/catalog/<string:category_name>/')
+def showCategory(category_name):
+    category_id = getCategoryid(category_name)
+    category = session.query(Category).filter_by(id=category_id).one()
+    items = session.query(CategoryItem).filter_by(category_id=category_id).all()
+    return render_template('category.html', category=category, items=items, category_name=category_name)
 
 
 #Create a new item in the database
@@ -322,26 +335,22 @@ def newItem():
         return render_template('newitem.html', categories=categories)
 
 
-#Show specified category
-@app.route('/catalog/<string:category_name>/')
-def showCategory(category_name):
-    category_id = getCategoryid(category_name)
-    category = session.query(Category).filter_by(id=category_id).one()
-    items = session.query(CategoryItem).filter_by(category_id=category_id).all()
-    creator = getUserInfo(items.user_id)
-    if 'username' not in login_session != login_session['user_id']:
-        return render_template('publiccategory.html', category=category, items=items, category_name=category_name)
+#Show items based on User_id
+@app.route('/catalog/user/')
+def showUserItems():
+    if 'username' not in login_session:
+        return redirect('/login')
     else:
-        return render_template('category.html', category=category, items=items, category_name=category_name)
+        user_id = getUserID(login_session['email'])
+        uitems = session.query(CategoryItem).filter_by(user_id=user_id).all()
+        return render_template('usercatalog.html', uitems=uitems)
 
 
 #Edit an existing item
-@app.route('/catalog/<string:category_name>/<int:item_id>/edit/',
-           methods=['GET', 'POST'])
-def editItem(category_name, item_id):
+@app.route('/catalog/user/<int:item_id>/edit',methods=['GET', 'POST'])
+def editItem(item_id):
     if 'username' not in login_session:
         return redirect('/login')
-    category_id = getCategoryid(category_name)
     editedItem = session.query(CategoryItem).filter_by(id=item_id).one()
     if login_session['user_id'] != editedItem.user_id:
         return "<script>function myFunction() {alert('You are not authorized to edit this item. Please create your own item in order to edit it.');}</script><body onload='myFunction()'>"
@@ -353,18 +362,17 @@ def editItem(category_name, item_id):
         session.add(editedItem)
         session.commit()
         flash("Item has been edited")
-        return redirect(url_for('showCategory', category_name=category_name))
+        return redirect(url_for('showUserItems'))
     else:
         return render_template(
-            'edititem.html', category_name=category_name, item_id=item_id, item=editedItem)
+            'edititem.html', item_id=item_id, item=editedItem)
 
 
 #Delete an existing item
-@app.route('/catalog/<string:category_name>/<int:item_id>/delete/',methods=['GET', 'POST'])
-def deleteItem(category_name, item_id):
+@app.route('/catalog/user/<int:item_id>/delete',methods=['GET', 'POST'])
+def deleteItem(item_id):
     if 'username' not in login_session:
         return redirect('/login')
-    category_id = getCategoryid(category_name)
     itemToDelete = session.query(CategoryItem).filter_by(id=item_id).one()
     if login_session['user_id'] != itemToDelete.user_id:
         return "<script>function myFunction() {alert('You are not authorized to delete this item.');}</script><body onload='myFunction()'>"
@@ -372,9 +380,9 @@ def deleteItem(category_name, item_id):
         session.delete(itemToDelete)
         session.commit()
         flash("Item has been deleted")
-        return redirect(url_for('showCategory', category_name=category_name))
+        return redirect(url_for('showUserItems'))
     else:
-        return render_template('deleteitem.html', category_id=category_id, category_name=category_name, item=itemToDelete)
+        return render_template('deleteitem.html', item_id=item_id, item=itemToDelete)
 
 
 # Disconnect based on provider

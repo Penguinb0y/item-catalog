@@ -4,6 +4,23 @@
 			<span class="glyphicon glyphicon-home" aria-hidden="true"></span>Back to the Catalog!
 		</a>
 	</div>
+
+		{%if 'username' in session %}
+	
+		<div class="row padding-top padding-bottom">
+			<div class="col-md-1"></div>
+			<div class="col-md-10 padding-none">
+				<a href="{{url_for('showUserItems')}}">Go to user items</a>
+				<a href="{{url_for('newItem')}}">
+					<button class="btn btn-default" id="new-item">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
+					</button>
+				</a>
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+	{% endif %}
+
 	<div class="col-md-6 text-right">
 					{%if 'username' not in session %}
 			<a href="{{url_for('showLogin')}}">Click Here to Login </a>

@@ -48,4 +48,16 @@ users = session.query(User).all()
 
 for user in users:
 	print "User: " + str(user.id)
+	print "Name: " + user.name
+print "\n"
+
+uitems = session.query(CategoryItem).filter_by(user_id=1).all()
+
+print "All items in all categories queried by user_id:\n"
+for uitem in uitems:
+	print uitem.name
+	print "item_id: " + str(uitem.id)
+	print "category_id: " + str(uitem.category_id)
+	print "user_id: " + str(uitem.user_id)
+	print "\n"
 print "\n"

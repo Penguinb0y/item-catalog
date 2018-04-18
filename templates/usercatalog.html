@@ -1,0 +1,76 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+
+
+<div class='pane'>
+    <div class='header'>
+        <h1>User Created Items</h1>
+    </div>
+
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+            <a href="{{url_for('newItem')}}">
+                <button class="btn btn-default" id="new-item">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
+                </button>
+            </a>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+
+    <div class='flash'>
+        {% with messages = get_flashed_messages() %} {% if messages %}
+
+        <ul>
+            {% for message in messages %}
+            <li>
+                <strong> {{ message }} </strong>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
+
+    </div>
+
+
+</div>
+
+
+
+<div class="item">
+     {% for i in uitems %}
+    <div class='name'>
+        <span class='name'>
+            <h3>{{i.name}}</h3>
+        </span>
+    </div>
+
+    <div class='description'>
+        <p>{{i.description}}</p>
+    
+    </div>
+    
+<!--Checking for i.id functionality; will remove in the future-->
+    <div class='item_id'>
+        <p>{{i.id}}</p>
+    
+    </div>
+<!-- url_for pathing not functioning properly yet not quite sure why -->
+    <div class="editdeletepane">
+        <button>
+            <a href='#'>Edit</a>
+        </button>
+        <button>
+            <a href='#'>Delete</a>
+        </button>
+    </div>
+
+{% endfor %}
+
+
+</div>
+
+
+</div>
+</div>
+{% endblock %}
