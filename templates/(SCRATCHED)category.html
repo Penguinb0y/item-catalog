@@ -3,41 +3,37 @@
 
 
 
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
 
 
-<div class = 'pane'>
-	<div class = 'header'>
-		<h1>{{ category.name }}</h1>
-	</div>
+<div class='pane'>
+    <div class='header'>
+        <h1>{{ category.name }}</h1>
+    </div>
 
-	<div class="row padding-top padding-bottom">
-		<div class="col-md-1"></div>
-		<div class="col-md-10 padding-none">
-			<a href="{{url_for('newItem')}}">
-				<button class="btn btn-default" id="new-item">
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+            <a href="{{url_for('newItem')}}">
+                <button class="btn btn-default" id="new-item">
 					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
 				</button>
-			</a>
-		</div>
-		<div class="col-md-1"></div>
-	</div>
+            </a>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
 
-	<div class = 'flash'>
-		{% with messages = get_flashed_messages() %}
-		{% if messages %}
+    <div class='flash'>
+        {% with messages = get_flashed_messages() %} {% if messages %}
 
-		<ul>
-			{% for message in messages %}
-			<li> <strong> {{ message }} </strong> </li>
-			{% endfor %}
-		</ul>
-		{% endif %}
-		{% endwith %}
+        <ul>
+            {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+            {% endfor %}
+        </ul>
+        {% endif %} {% endwith %}
 
-	</div>
+    </div>
 
 
 </div>
@@ -45,22 +41,22 @@
 {% for i in items %}
 
 <div class="item">
-	<div class = 'name'>
-		<span class = 'name'><h3>{{i.name}}</h3></span>
-	</div>
+    <div class='name'>
+        <span class='name'><h3>{{i.name}}</h3></span>
+    </div>
 
-	<div class = 'description'>
-		<p>{{i.description}}</p>
-	</div>
+    <div class='description'>
+        <p>{{i.description}}</p>
+    </div>
 
-	<div class = "editdeletepane">
-		<button>
+    <div class="editdeletepane">
+        <button>
 			<a href='{{url_for('editItem', category_name = category_name, item_id = i.id) }}'>Edit</a>
 		</button>
-		<button>
+        <button>
 			<a href = '{{url_for('deleteItem', category_name = category_name, item_id = i.id) }}'>Delete</a>
 		</button>
-	</div>
+    </div>
 
 </div>
 

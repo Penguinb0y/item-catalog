@@ -1,21 +1,25 @@
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
 
+<div class='pane'>
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+            <div class='header'>
+                <h1> Delete Item </h1>
+            </div>
+        </div>
+    </div>
 
-<h1> Delete Item </h1>
-
-<h1> Are you sure you want to delete {{item.name}}? </h1>
-
-<form action="{{ url_for('deleteItem', item_id = item.id)}}" method = 'post'>
-
-	<input type='submit', value = 'Delete'>
-
-	<button>
-		<a href = '{{url_for('showUserItems')}} '> Cancel </a>
-	</button>
-	
-</form>
-
-
+    <div class="col-md-12 text-center">
+        <h1> Are you sure you want to delete {{item.name}}? </h1>
+    </div>
+    <div class="col-md-12 text-center">
+        <form action="{{ url_for('deleteItem', item_id = item.id)}}" method='post'>
+            <input type='submit' , value='Delete'>
+            <button>
+        <a href = '{{url_for('showUserItems')}} '> Cancel </a>
+      </button>
+        </form>
+    </div>
+</div>
 {% endblock %}

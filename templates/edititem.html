@@ -1,23 +1,29 @@
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
 
-<h1> Edit Item </h1>
+<div class='pane'>
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+            <div class='header'>
+                <h1>Edit Item</h1>
+            </div>
+        </div>
+    </div>
 
-<form action="{{ url_for('editItem', item_id=item.id )}}" method = 'post'>
-
-<dl>
-	<dt>Name:</dt>
-		<dd><input type ='text' size='30' name='name' placeholder = '{{item.name }}'></dd>
-	<dt>Description:</dt>
-		<dd><textarea name = 'description' rows='5' cols='40' placeholder = '{{item.description }}'></textarea></dd>
-		</select>
-</dl>
-
-
-<input type='submit' value='Edit'>
-
-<button><a href = '{{url_for('showUserItems')}} '> Cancel </a>
-</button>
-</form>
-{% endblock %}
+    <div class="col-md-1"> </div>
+    <div class="col-md-3">
+        <form action="{{ url_for('editItem', item_id=item.id )}}" method='post'>
+            <dl>
+                <dt>Name:</dt>
+                <dd><input type='text' size='30' name='name' placeholder='{{item.name }}'></dd>
+                <dt>Description:</dt>
+                <dd><textarea name='description' rows='5' cols='40' placeholder='{{item.description }}'></textarea></dd>
+                </select>
+            </dl>
+            <input type='submit' value='Edit'>
+            <button>
+            <a href = '{{url_for('showUserItems')}} '> Cancel </a>
+        </button>
+        </form>
+    </div>
+    {% endblock %}

@@ -1,53 +1,91 @@
 * {
-	font-family: 'Ubuntu Bold', Roboto, Arial, sans-serif;
-	font-weight: 700;
+    font-family: 'Ubuntu Bold', Roboto, Arial, sans-serif;
+    font-weight: 700;
 }
 
 h1 {
-	font-family: 'Ubuntu Light', Roboto, Arial, sans-serif;
-	font-size: 50px;
-	color: #3a4450;
-	line-height: 60px;
-	font-weight: 300;
+    font-family: 'Ubuntu Light', Roboto, Arial, sans-serif;
+    font-size: 50px;
+    color: #3a4450;
+    line-height: 60px;
+    font-weight: 300;
 }
 
 h2 {
-	font-size: 24px;
-	color: #4297c9;
+    font-size: 24px;
+    color: #4297c9;
 }
 
 h3 {
-	font-size: 18px;
-	color: #383838;
-	line-height: 23px;
+    font-size: 18px;
+    color: #383838;
+    line-height: 23px;
 }
 
 p {
- 	font-family: "Ubuntu", Roboto, Arial, sans-serif;
- 	font-size: 16px;
- 	color: #73747b;
- 	line-height: 24px;
- 	font-weight: 400;
- }
+    font-family: "Ubuntu", Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #73747b;
+    line-height: 24px;
+    font-weight: 400;
+}
 
 strong {
- 	font-size: 16px;
- 	color: #595553;
- 	line-height: 24px;
- }
+    font-size: 16px;
+    color: #595553;
+    line-height: 24px;
+}
 
- a {
- 	font-size: 14px;
- 	color: #189abc;
- 	line-height: 17px;
- }
+nav,
+a,
+button {
+    font-size: 14px;
+    color: #189abc;
+    line-height: 17px;
+}
 
- .item {
- 	margin-top: 20px;
- 	margin-bottom: 10px;
- }
+form {
+    padding-top: 20%;
+}
 
- .container {
-	 background-color:#607C9F;
+.top-menu {
+    margin-top: 8px;
+}
 
- }
+.header {
+    border-bottom: 3px solid grey;
+    padding-bottom: 3%
+}
+
+.category-list {
+    background-color: lightgrey;
+    border: 2px solid lightslategrey;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.item {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 2px solid black;
+    border-radius: 18px;
+    padding-bottom: 10px;
+    background-color: lightgoldenrodyellow;
+    border-left-width: 6px;
+    border-left-color: slategray;
+}
+
+.container {
+    background-color: #CEF0FB;
+    padding-bottom: 22%;
+}
+
+.loginButton {
+    text-align: center;
+    padding: 20%;
+    border: 2px solid black;
+    border-radius: 18px;
+    background-color: lightslategrey;
+    border-left-width: 6px;
+    border-left-color: rgb(28, 91, 153);
+}

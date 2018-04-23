@@ -1,35 +1,40 @@
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
 
-<h1>New Category Item</h1>
 
-<div class = 'pane'>
-<form action="{{ url_for('newItem')}}" method = 'post'>
+<div class='pane'>
+    <div class="row padding-top padding-bottom">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 padding-none">
+            <div class='header'>
+                <h1>New Category Item</h1>
+            </div>
+        </div>
+    </div>
 
-<dl>
-      <dt>Name:</dt>
-            <dd><input type ='text' size='30' name='name' required></dd>
-            <dt>Description:</dt>
-                        <dd><textarea name = 'description' rows='5' cols='40' required></textarea></dd>
-            <dt>Category:</dt>
-                  <select name="category">
+
+
+    <div class="col-md-1"> </div>
+    <div class="col-md-3">
+        <form action="{{ url_for('newItem')}}" method='post'>
+            <dl>
+                <dt>Name:</dt>
+                <dd><input type='text' size='30' name='name' required></dd>
+                <dt>Description:</dt>
+                <dd><textarea name='description' rows='5' cols='40' required></textarea></dd>
+                <dt>Category:</dt>
+                <select name="category">
                         {% for c in categories %}
                               <dd><option value='{{c.id}}'>{{c.name}}</option></dd>
                         {% endfor %}
                   </select>
-
-</dl>
-
-
-<input type='submit' value='Create'>
-
-<button>
-      <a href = '{{url_for('showCatalog')}} '> Cancel </a>
-</button>
-</form>
-
-
+            </dl>
+            <input type='submit' value='Create'>
+            <button>
+        <a href = '{{url_for('showCatalog')}} '> Cancel </a>
+        </button>
+        </form>
+    </div>
 </div>
+
 
 {% endblock %}

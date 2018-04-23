@@ -1,32 +1,38 @@
-<div class="row top-menu">
-	<div class="col-md-6">
-		<a href="{{url_for('showCatalog')}}">
-			<span class="glyphicon glyphicon-home" aria-hidden="true"></span>Back to the Catalog!
-		</a>
-	</div>
+<div class="row top-menu padding-top">
 
-		{%if 'username' in session %}
-	
-		<div class="row padding-top padding-bottom">
-			<div class="col-md-1"></div>
-			<div class="col-md-10 padding-none">
-				<a href="{{url_for('showUserItems')}}">Go to user items</a>
-				<a href="{{url_for('newItem')}}">
-					<button class="btn btn-default" id="new-item">
+    <div class="col-md-6">
+        <div class="col-md-2"></div>
+        <a href="{{url_for('showCatalog')}}">
+            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>Back to the Catalog!
+        </a>
+    </div>
+
+
+
+    {%if 'username' in session %}
+    <div class="col-md-6">
+        <div class="col-md-8"></div>
+        <a href="{{url_for('showUserItems')}}">Go to my items</a>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-2"></div>
+        <a href="{{url_for('newItem')}}">
+            <button class="btn btn-default" id="new-item">
 						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Item
 					</button>
-				</a>
-			</div>
-			<div class="col-md-1"></div>
-		</div>
-	{% endif %}
+        </a>
+    </div>
+    {% endif %}
 
-	<div class="col-md-6 text-right">
-					{%if 'username' not in session %}
-			<a href="{{url_for('showLogin')}}">Click Here to Login </a>
-			{% else %}
-			<a href="{{url_for('disconnect')}}">Logout </a>
-			{% endif %}
-		
-	</div>
+
+    <div class="col-md-6">
+        <div class="col-md-8"></div>
+        <div class="col-md-1">
+            {%if 'username' not in session %}
+            <a href="{{url_for('showLogin')}}">Login </a> {% else %}
+            <a href="{{url_for('disconnect')}}">Logout </a> {% endif %}
+        </div>
+    </div>
+
+
 </div>

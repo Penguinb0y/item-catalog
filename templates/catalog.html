@@ -1,46 +1,33 @@
-{% extends "main.html" %}
-{% block content %}
-{% include "header.html" %}
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
 
-
-<div class="row top-menu">
-	<div class="col-md-10"></div>
-	<div class="col-md-2 text-right">
-	</div>
-</div>
-<div class="row divider blue">
-	<div class="col-md-12"></div>
-</div>
 <div class="row banner main">
-	<div class="col-md-1"></div>
-	<div class="col-md-11 padding-none">
-		<h1>Item Catalog</h1>
-	</div>
+    <div class="col-md-1"></div>
+    <div class="col-md-11 padding-none">
+        <div class="header">
+            <h1>Item Catalog</h1>
+        </div>
+        <div class='flash'>
+            {% with messages = get_flashed_messages() %} {% if messages %}
+
+            <ul>
+                {% for message in messages %}
+                <li> <strong> {{ message }} </strong> </li>
+                {% endfor %}
+            </ul>
+            {% endif %} {% endwith %}
+
+        </div>
+    </div>
 </div>
 
-<div class = 'flash'>
-	{% with messages = get_flashed_messages() %}
-	{% if messages %}
-
-	<ul>
-		{% for message in messages %}
-		<li> <strong> {{ message }} </strong> </li>
-		{% endfor %}
-	</ul>
-	{% endif %}
-	{% endwith %}
-
+{% for c in categories %}
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-3 category-list">
+        <a href="{{url_for('showCategory', category_name = c.name)}}">
+            <h3>{{c.name}}</h3>
+        </a>
+    </div>
+    <div class="col-md-1"></div>
 </div>
-
-	{% for c in categories %}
-		<a href = "{{url_for('showCategory', category_name = c.name)}}">
-			<div class="row">
-				<div class="col-md-1"></div>
-					<div class="col-md-10 category-list">
-						<h3>{{c.name}}</h3>
-					</div>
-				<div class="col-md-1"></div>
-			</div>
-		</a>
-	{% endfor %}
-{% endblock %}
+{% endfor %} {% endblock %}
