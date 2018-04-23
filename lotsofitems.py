@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+#
+# code populize the database
+# if running for the first time
+# run this file second after
+# running database_setup.py
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -21,7 +28,9 @@ session = DBSession()
 
 # Create dummy user
 User1 = User(name="Robo Barista", email="tinnyTim@udacity.com",
-             picture='https://pbs.twimg.com/profile_images/2671170543/18debd694829ed78203a5a36dd364160_400x400.png')
+             picture=(r'https://pbs.twimg.com/profile_images/'
+                      r'2671170543/'
+                      r'18debd694829ed78203a5a36dd364160_400x400.png'))
 session.add(User1)
 session.commit()
 
@@ -32,20 +41,26 @@ category1 = Category(name="Basketball")
 session.add(category1)
 session.commit()
 
-categoryItem1 = CategoryItem(user_id=1, name="Basketball", description="The very definition of the sport",
-                      category=category1)
+categoryItem1 = CategoryItem(
+    user_id=1, name="Basketball",
+    description="The very definition of the sport",
+    category=category1)
 
 session.add(categoryItem1)
 session.commit()
 
-categoryItem2 = CategoryItem(user_id=1, name="Jersey", description="Rep your team home boi",
-                      category=category1)
+categoryItem2 = CategoryItem(
+    user_id=1, name="Jersey",
+    description="Rep your team home boi",
+    category=category1)
 
 session.add(categoryItem2)
 session.commit()
 
-categoryItem3 = CategoryItem(user_id=1, name="Shoes", description="Just not the Jordans",
-                      category=category1)
+categoryItem3 = CategoryItem(
+    user_id=1, name="Shoes",
+    description="Just not the Jordans",
+    category=category1)
 
 session.add(categoryItem3)
 session.commit()
@@ -57,20 +72,26 @@ category2 = Category(name="Students")
 session.add(category2)
 session.commit()
 
-categoryItem1 = CategoryItem(user_id=1, name="Laptop", description="A necessity",
-                      category=category2)
+categoryItem1 = CategoryItem(
+    user_id=1, name="Laptop",
+    description="A necessity",
+    category=category2)
 
 session.add(categoryItem1)
 session.commit()
 
-categoryItem2 = CategoryItem(user_id=1, name="Backpack", description="All nice and bulky",
-                      category=category2)
+categoryItem2 = CategoryItem(
+    user_id=1, name="Backpack",
+    description="All nice and bulky",
+    category=category2)
 
 session.add(categoryItem2)
 session.commit()
 
-categoryItem3 = CategoryItem(user_id=1, name="Notebook", description="Hope you like spiral!",
-                      category=category2)
+categoryItem3 = CategoryItem(
+    user_id=1, name="Notebook",
+    description="Hope you like spiral!",
+    category=category2)
 
 session.add(categoryItem3)
 session.commit()
@@ -82,21 +103,27 @@ category3 = Category(name="Colors")
 session.add(category3)
 session.commit()
 
-categoryItem1 = CategoryItem(user_id=1, name="Black", description="you see anything?",
-                      category=category3)
+categoryItem1 = CategoryItem(
+    user_id=1, name="Black",
+    description="you see anything?",
+    category=category3)
 
 session.add(categoryItem1)
 session.commit()
 
-categoryItem2 = CategoryItem(user_id=1, name="Blue", description="Sky color!",
-                      category=category3)
+categoryItem2 = CategoryItem(
+    user_id=1, name="Blue",
+    description="Sky color!",
+    category=category3)
 
 session.add(categoryItem2)
 session.commit()
 
 
-categoryItem3 = CategoryItem(user_id=1, name="Red", description="Now where's purple..?",
-                      category=category3)
+categoryItem3 = CategoryItem(
+    user_id=1, name="Red",
+    description="Now where's purple..?",
+    category=category3)
 
 session.add(categoryItem3)
 session.commit()
@@ -108,22 +135,28 @@ category4 = Category(name="Fighting Games")
 session.add(category4)
 session.commit()
 
-categoryItem1 = CategoryItem(user_id=1, name="Street Fighter", description="The one that started it all",
-                      category=category4)
+categoryItem1 = CategoryItem(
+    user_id=1, name="Street Fighter",
+    description=" Would you like Sonic Booms or Hadokens?",
+    category=category4)
 
 session.add(categoryItem1)
 session.commit()
 
 
-categoryItem2 = CategoryItem(user_id=1, name="Tekken", description="3d fun!",
-                      category=category4)
+categoryItem2 = CategoryItem(
+    user_id=1, name="Tekken",
+    description="3d fun!",
+    category=category4)
 
 session.add(categoryItem2)
 session.commit()
 
 
-categoryItem3 = CategoryItem(user_id=1, name="Marvel vs. Capcom 2", description="Oh, he so Pringles!",
-                      category=category4)
+categoryItem3 = CategoryItem(
+    user_id=1, name="Marvel vs. Capcom 2",
+    description="Oh, he so Pringles!",
+    category=category4)
 
 session.add(categoryItem3)
 session.commit()

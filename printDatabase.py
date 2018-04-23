@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+#
+# code to check and print out database
+# in the terminal
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, CategoryItem, User
@@ -6,7 +11,7 @@ engine = create_engine('sqlite:///itemcatalogwithusers.db')
 
 Base.metadata.bind = engine
 
-DBSession = sessionmaker(bind = engine)
+DBSession = sessionmaker(bind=engine)
 
 session = DBSession()
 
@@ -18,19 +23,19 @@ categories = session.query(Category).all()
 
 print "List of categories in Catalog:\n"
 for category in categories:
-	print category.name
-	print category.id
+    print category.name
+    print category.id
 print "\n"
 
 items = session.query(CategoryItem).all()
 
 print "All items in all categories:\n"
 for item in items:
-	print item.name
-	print "item_id: " + str(item.id)
-	print "category_id: " + str(item.category_id)
-	print "user_id: " + str(item.user_id)
-	print "\n"
+    print item.name
+    print "item_id: " + str(item.id)
+    print "category_id: " + str(item.category_id)
+    print "user_id: " + str(item.user_id)
+    print "\n"
 print "\n"
 
 category = session.query(Category.name).filter_by(id=1).one()
@@ -47,17 +52,17 @@ print "\n"
 users = session.query(User).all()
 
 for user in users:
-	print "User: " + str(user.id)
-	print "Name: " + user.name
+    print "User: " + str(user.id)
+    print "Name: " + user.name
 print "\n"
 
 uitems = session.query(CategoryItem).filter_by(user_id=1).all()
 
 print "All items in all categories queried by user_id:\n"
 for uitem in uitems:
-	print uitem.name
-	print "item_id: " + str(uitem.id)
-	print "category_id: " + str(uitem.category_id)
-	print "user_id: " + str(uitem.user_id)
-	print "\n"
+    print uitem.name
+    print "item_id: " + str(uitem.id)
+    print "category_id: " + str(uitem.category_id)
+    print "user_id: " + str(uitem.user_id)
+    print "\n"
 print "\n"
