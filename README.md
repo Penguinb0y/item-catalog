@@ -1,5 +1,6 @@
-# EDIT:
-### * project.py now unable to be run incorrectly with my attempts to adhere to PEP8 Styling
+# EDIT: Currently unfinished, I am having certain problems where I am in need of assistance listed below
+#### * Not quite sure everything is running properly when I tried to make project.py PEP8 compliant
+#### * Styling the login buttons got a little weird, in the process of changing it
 #### * Facebook now enforces HTTPS meaning that HTTP is not a Valid OAuth Redirect URI. Having issues working around that
 #### * After newly implementing a dedicated user page for add, edit, and delete, functionality, the url_for is having issues with passing through item_id, and as a result, is not working correctly, Having issues with that.
 
