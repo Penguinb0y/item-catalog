@@ -14,22 +14,14 @@ https://www.vagrantup.com/downloads.html
 * A unix-style terminal
 
 ### Other Requirements
-* Your own Google Account
+* Your own 3rd Party Account
 
 VirtualBox is the program that runs your Linux virtual machine and Vagrant is the program that will download a Linux operating system and run it inside the virtual machine. (All of which will be done through a terminal.)
 
-Provided in item-catalog are these files:
-* a static folder for `styles.css`
-* a templates folder for all the `.html` files
-* `Vagrantfile`
-* `client_secrets.json`
-* `fb_client_secrets.json`
-* `github_client_secrets.json`
+Provided in item-catalog for the user to interact with are these files:
 * `database_setup.py`
 * `lotsofitems.py`
 * `project.py`
-
-# EDIT: everything else not specified are to be removed in future repositories
 
 # Directions
 1. On a terminal, `cd` to `item-catalog` so it's now the working directory.
