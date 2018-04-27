@@ -57,6 +57,10 @@ form {
     padding-bottom: 3%
 }
 
+.flash {
+    padding: 4%;
+}
+
 .category-list {
     background-color: lightgrey;
     border: 2px solid lightslategrey;
@@ -82,7 +86,8 @@ form {
 
 .loginButton {
     text-align: center;
-    padding: 20%;
+    padding: 8%;
     border: 2px solid black;
     border-radius: 18px;
+    margin-top: 5%;
 }

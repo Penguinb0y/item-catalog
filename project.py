@@ -53,7 +53,6 @@ def showLogin():
 @app.route('/fbconnect', methods=['POST'])
 def fbconnect():
     """Facebook authorization"""
-    # DOES NOT CURRENTLY WORK :(
     # Facebook now requires https domains
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -65,11 +64,9 @@ def fbconnect():
         'web']['app_id']
     app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
-    url = (r'https://graph.facebook.com/oauth/'
-           r'access_token?grant_type=fb_exchange_token&'
-           r'client_id=%s&client_secret=%s&'
-           r'fb_exchange_token=%s') % (
-        app_id, app_secret, access_token)
+    url = ('https://graph.facebook.com/v2.11/oauth/access_token?'
+           'grant_type=fb_exchange_token&client_id=%s&client_secret=%s'
+           '&fb_exchange_token=%s') % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # Use token to get user info from API
@@ -87,8 +84,8 @@ def fbconnect():
     '''
     token = result.split(',')[0].split(':')[1].replace('"', '')
 
-    url = (r'https://graph.facebook.com/v2.8/'
-           r'me?access_token=%s&fields=name,id,email') % token
+    url = 'https://graph.facebook.com/v2.11/me?%s&fields=name,id,email,picture' % token
+
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # print "url sent for API access:%s"% url
@@ -103,8 +100,8 @@ def fbconnect():
     login_session['access_token'] = token
 
     # Get user picture
-    url = (r'https://graph.facebook.com/v2.8/me/picture?'
-           r'access_token=%s&redirect=0&height=200&width=200') % token
+    url = ('https://graph.facebook.com/v2.8/me/picture?'
+           'access_token=%s&redirect=0&height=200&width=200') % (token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -335,7 +332,7 @@ def showCatalog():
     return render_template('catalog.html', categories=categories)
 
 
-@app.route('/catalog/<string:category_name>/')
+@app.route('/catalog/<path:category_name>/')
 def showCategory(category_name):
     """Page that shows Items based on category"""
     category_id = getCategoryid(category_name)
@@ -377,7 +374,7 @@ def showUserItems():
         return render_template('usercatalog.html', uitems=uitems)
 
 
-@app.route('/catalog/user/<int:item_id>/edit', methods=['GET', 'POST'])
+@app.route('/catalog/user/<path:item_id>/edit', methods=['GET', 'POST'])
 def editItem(item_id):
     """User edits an existing item"""
     if 'username' not in login_session:
