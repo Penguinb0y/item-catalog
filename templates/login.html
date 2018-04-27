@@ -102,7 +102,8 @@
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
         function sendTokenToServer() {
             console.log('Welcome!  Fetching your information.... ');
             FB.login(function(response) {
@@ -115,6 +116,7 @@
                         data: access_token,
                         contentType: 'application/octet-stream; charset=utf-8',
                         success: function(result) {
+                            // Handle or verify the server response if necessary.
                             if (result) {
                                 $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...');
                                 setTimeout(function() {
@@ -140,5 +142,13 @@
 </div>
 <!--END FACEBOOK SIGN IN -->
 
+<!--GITHUB SIGN IN -->
+<div class="col-sm-12 loginButton text-center">
+    <a href="https://github.com/login/oauth/authorize?client_id=316620406857b7184e85&state={{STATE}}">
+    Login with Github
+    </a>
+</div>
+
+<!--END GITHUB SIGN IN -->
 
 {% endblock %}
