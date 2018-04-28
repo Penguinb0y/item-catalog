@@ -1,0 +1,13 @@
+Aside from the system requirements as provided in the README.md,
+the only other requirements needed for this project is an
+outside 3rd party account in order to login.
+
+3rd Party Accounts refer to the following providers:
+- Google Account
+- Facebook Account (disabled as of 04-28-2018 until further notice)
+- Github Account
+
+Without one of the following accounts to login from, you will not have access
+to creating, editing, or deleting any items from the database. If you do not
+have one already, please go to one of these websites and create an account
+to have access of what I intended to showcase in this project.

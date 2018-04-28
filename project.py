@@ -4,12 +4,12 @@
 # http://localhost:8000/
 # (Includes user authorized CRUD functionality)
 
-from flask import Flask, \
-                    render_template, \
-                    request, redirect, \
-                    url_for, \
-                    flash, \
-                    jsonify
+from flask import (Flask,
+                   render_template,
+                   request, redirect,
+                   url_for,
+                   flash,
+                   jsonify)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, CategoryItem, User
@@ -84,12 +84,14 @@ def githubconnect():
     print "Printing Response"
     print response
     if 'access_token' not in response:
-        response = make_response(json.dumps('Github did not return an access token.'), 401)
+        response = make_response(json.dumps(
+            'Github did not return an access token.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
     login_session['access_token'] = response['access_token']
-    url = 'https://api.github.com/user?access_token=%s' % login_session['access_token']
+    url = ('https://api.github.com/user?access_token=%s'
+           % login_session['access_token'])
     http = httplib2.Http()
     result = http.request(url, 'GET')[1]
     print "User is "
@@ -113,17 +115,25 @@ def githubconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += """
+              " style = "width: 300px;
+              height: 300px;
+              border-radius: 150px;
+              -webkit-border-radius: 150px;
+              -moz-border-radius: 150px;">
+              """
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return redirect(url_for('showCatalog'))
+
 
 @app.route('/githubdisconnect')
 def githubdisconnect():
     client_id = login_session['client_id']
     # The access token must be included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://api.github.com/applications/%s/tokens/%s' % (client_id, access_token)
+    url = ('https://api.github.com/'
+           'applications/%s/tokens/%s') % (client_id, access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     return "you have been logged out"
@@ -139,7 +149,7 @@ def fbconnect():
     access_token = request.data
     print "access token received %s " % access_token
 
-    #exchange client token for long-lived server-side token with GET
+    # exchange client token for long-lived server-side token with GET
     app_id = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_id']
     app_secret = json.loads(
@@ -150,14 +160,16 @@ def fbconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
-    print "data: ",data
+    print "data: ", data
     token = 'access_token=' + data['access_token']
 
     # Use token to get user info from API
     # make API call with new token
-    url = 'https://graph.facebook.com/v2.11/me?%s&fields=name,id,email,picture' % token
+    url = ('https://graph.facebook.com/'
+           'v2.11/me?%s&fields=name,id,email,picture'
+           % token)
 
-    #new: put the "picture" here, it is now part of the default "public_profile"
+    # new: the "picture" is now part of the default "public_profile"
 
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
@@ -169,7 +181,7 @@ def fbconnect():
     login_session['picture'] = data['picture']["data"]["url"]
     login_session['access_token'] = access_token
 
-    #see if user exists
+    # see if user exists
     user_id = getUserID(login_session['email'])
     if not user_id:
         user_id = createUser(login_session)
@@ -192,7 +204,8 @@ def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id, access_token)
+    url = ('https://graph.facebook.com/%s/'
+           'permissions?access_token=%s') % (facebook_id, access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     return "you have been logged out"
@@ -313,8 +326,12 @@ def getUserInfo(user_id):
 
 
 def getUserID(email):
-    user = session.query(User).filter_by(email=email).one()
-    return user.id
+    try:
+        user = session.query(User).filter_by(email=email).one()
+        return user.id
+    except:
+        return None
+
 
 @app.route('/gdisconnect')
 def gdisconnect():

@@ -1,4 +1,4 @@
-# EDIT: Facebook now enforces HTTPS meaning that HTTP is not a Valid OAuth Redirect URI. Having issues working around that
+## Update: Facebook Sign in is currently disabled due to Facebook now only enforcing HTTPS and not HTTP as a Valid OAuth Redirect URI. I'll leave the code here in hopes of finding a solution, but as for now it will be disabled to avoid confusion for user experience.
 
 # README
 This is a project purely dedicated to CRUD functionality based on User Authentication and Authorization by using RESTful web application using the Python framework Flask along with OAuth authentication. The purpose of this project is to have an efficient interaction with data of a web application, to properly implement authentication mechanisms, and appropriately map HTTP methods to CRUD operations.
@@ -14,7 +14,7 @@ https://www.vagrantup.com/downloads.html
 * A unix-style terminal
 
 ### Other Requirements
-* Your own 3rd Party Account
+* Your own 3rd Party Account (More information in `requirements.txt`)
 
 VirtualBox is the program that runs your Linux virtual machine and Vagrant is the program that will download a Linux operating system and run it inside the virtual machine. (All of which will be done through a terminal.)
 
@@ -33,7 +33,7 @@ Provided in item-catalog for the user to interact with are these files:
 7. Run the command `python project.py` to run the program 
 8. Go to your preferred web browser and go to the url: http://localhost:8000 to go to the item-catalog page. (Welcome!)
 9. Click on the login link on the top-right corner
-10. Sign-in with your 3rd party account and then you will be redirected back to the main page
+10. Sign-in with your 3rd party account and then you will be redirected back to the main page (More details in `requirements.txt`)
 11. Click on the link that says "Go to my items"
 12. On that page, which should be empty, you will have access to be able to create, edit, and delete your own items
 
