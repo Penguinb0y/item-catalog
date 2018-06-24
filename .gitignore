@@ -1,1 +1,3 @@
 .vagrant/
+itemcatalogwithusers.db
+database_setup.pyc
