@@ -12,6 +12,10 @@ from flask import (Flask,
                    jsonify)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
+#maintain the same connection across all threads
+from sqlalchemy.pool import StaticPool
+
 from database_setup import Base, Category, CategoryItem, User
 
 from flask import session as login_session
@@ -34,7 +38,9 @@ APPLICATION_NAME = "Item Catalog App"
 
 
 # Connect to database and create database session
-engine = create_engine('sqlite:///itemcatalogwithusers.db')
+engine = create_engine(
+    'sqlite:///itemcatalogwithusers.db',
+    connect_args={'check_same_thread':False}, poolclass=StaticPool)
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
