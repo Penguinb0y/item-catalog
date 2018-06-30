@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # code runs the item catalog website on dedicated host:
-# http://localhost:8000/
+# http://localhost:5000/
 # (Includes user authorized CRUD functionality)
 
 from flask import (Flask,
@@ -12,9 +12,6 @@ from flask import (Flask,
                    jsonify)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-#maintain the same connection across all threads
-from sqlalchemy.pool import StaticPool
 
 from database_setup import Base, Category, CategoryItem, User
 
@@ -29,18 +26,20 @@ import json
 from flask import make_response
 import requests
 
+
+
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/catalog/catalog/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item Catalog App"
 
 
 # Connect to database and create database session
 engine = create_engine(
-    'sqlite:///itemcatalogwithusers.db',
-    connect_args={'check_same_thread':False}, poolclass=StaticPool)
+    'postgresql://catalog:udacity@localhost/catalog'')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -73,9 +72,9 @@ def githubconnect():
     print code
     # Exchange client token for long-lived server-side token
     app_id = json.loads(
-        open('github_client_secrets.json', 'r').read())['web']['app_id']
+        open('/var/www/catalog/catalog/github_client_secrets.json', 'r').read())['web']['app_id']
     app_secret = json.loads(
-        open('github_client_secrets.json', 'r').read())['web']['app_secret']
+        open('/var/www/catalog/catalog/github_client_secrets.json', 'r').read())['web']['app_secret']
 
     url = 'https://github.com/login/oauth/access_token'
     payload = {
